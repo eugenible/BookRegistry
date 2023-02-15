@@ -6,12 +6,15 @@
 </head>
 <body>
 
-<p th:text="Список людей"></p>
+<p>Список людей</p>
 
-<p th:if="${people.isEmpty()}" th:text="Список людей пуст"></p>
+<!--<p th:if="${!people.isEmpty()}" th:text="Нет людей нахуй">Список людей пуст</p>-->
+<div th:if="${people.isEmpty()}">
+    <p>Список людей пуст</p>
+</div>
 
 <div th:each="person : ${people}">
-    <a th:href="@{/people/{id}(id=${people.getId()})" th:text="${person.name + ', ' + person.age}"></a>
+    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName() + ', ' + person.getAge()}">user</a>
 </div>
 
 

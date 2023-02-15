@@ -21,7 +21,7 @@ public class PersonDAO {
     }
 
     public List<Person> list() {
-        return jdbcTemplate.query("SELECT * FROM person", new BeanPropertyRowMapper<Person>());
+        return jdbcTemplate.query("SELECT * FROM person", new BeanPropertyRowMapper<>(Person.class));
     }
 
 }
