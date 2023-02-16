@@ -3,9 +3,13 @@ package ru.eugenible.registry.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.bind.annotation.*;
 import ru.eugenible.registry.dao.PersonDAO;
+import ru.eugenible.registry.models.Person;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/people")
@@ -14,6 +18,7 @@ public class PeopleController {
 
     private PersonDAO personDAO;
 
+
     @Autowired
     private PeopleController(PersonDAO personDAO) {
         this.personDAO = personDAO;
@@ -21,9 +26,34 @@ public class PeopleController {
 
     @GetMapping()
     public String list(Model model) {
-        System.out.println("In controller");
         model.addAttribute("people", personDAO.list());
-        System.out.println(personDAO.list());
         return "people/list";
     }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") int id, Model model) {
+        model.addAttribute("person", personDAO.show(id));
+        return "people/show";
+    }
+
+    @GetMapping("/new")
+    public String newPerson(@ModelAttribute("person") Person person) {
+        return "people/new";
+    }
+
+    @PostMapping
+    public String save(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
+        personDAO.save(person);
+        return "redirect:/people";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String update(Model model, @PathVariable int id) {
+        model.addAttribute("person", personDAO.show(id));
+        return "people/edit";
+    }
+
+
+
+
 }

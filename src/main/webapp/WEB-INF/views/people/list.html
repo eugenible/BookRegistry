@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<p>Список людей</p>
+<p>Список читателей</p>
 
 <!--<p th:if="${!people.isEmpty()}" th:text="Нет людей нахуй">Список людей пуст</p>-->
 <div th:if="${people.isEmpty()}">
@@ -17,6 +17,10 @@
     <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName() + ', ' + person.getAge()}">user</a>
 </div>
 
+<br/>
+<hr/>
+
+<a th:href="@{/people/new}">Создать нового читателя</a>
 
 </body>
 </html>
