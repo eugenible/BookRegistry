@@ -11,5 +11,5 @@ CREATE TABLE IF NOT EXISTS book
     title     text                                             NOT NULL,
     author    text                                             NOT NULL,
     year      int CHECK (year > 1900)                          NOT NULL,
-    person_id int REFERENCES person (id)
+    person_id int                                              REFERENCES person (id) ON DELETE SET NULL
 );

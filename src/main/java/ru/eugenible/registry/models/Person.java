@@ -1,10 +1,14 @@
 package ru.eugenible.registry.models;
 
+import java.util.List;
+
 public class Person {
 
     private int id;
     private String name;
     private int age;
+
+    private List<Book> books;
 
     public Person(int id, String name, int age) {
         this.id = id;
@@ -12,11 +16,11 @@ public class Person {
         this.age = age;
     }
 
-    public int getId() {
-        return id;
+    public Person() {
     }
 
-    public Person() {
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {

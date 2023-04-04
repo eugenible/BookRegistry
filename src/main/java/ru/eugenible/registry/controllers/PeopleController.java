@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.annotation.*;
 import ru.eugenible.registry.dao.PersonDAO;
 import ru.eugenible.registry.models.Person;
@@ -17,7 +16,6 @@ public class PeopleController {
 
 
     private PersonDAO personDAO;
-
 
     @Autowired
     private PeopleController(PersonDAO personDAO) {
@@ -32,6 +30,8 @@ public class PeopleController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
+//        Person person = personDAO.show(id);
+//        if (person == null) return "redirect:/people";
         model.addAttribute("person", personDAO.show(id));
         return "people/show";
     }
@@ -53,7 +53,16 @@ public class PeopleController {
         return "people/edit";
     }
 
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute Person person, @PathVariable("id") int id) {
+        personDAO.update(id, person);
+        return "redirect:/people";
+    }
 
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        personDAO.delete(id);
 
-
+        return "redirect:/people";
+    }
 }
