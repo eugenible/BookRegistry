@@ -43,7 +43,7 @@ public class BookDAO {
 
                     int ownerId = rs.getInt("person_id");
                     Person owner = personDAO.show(ownerId);
-                    mappedBook.setPerson(owner);
+                    mappedBook.setOwner(owner);
                     return mappedBook;
                 },
                 id).stream().findAny().orElse(null);
@@ -52,18 +52,17 @@ public class BookDAO {
     }
 
     public void delete(int id) {
-        jdbcTemplate.update("DELETE FROM book WHERE id = ?");
+        jdbcTemplate.update("DELETE FROM book WHERE id = ?", id);
     }
 
     public void update(int id, Book book) {
+        Object personId =
         jdbcTemplate.update("UPDATE book SET title = ?, author = ?, year= ?, person_id = ? WHERE id = ?",
-                book.getTitle(), book.getAuthor(), book.getYear(), book.getPerson());
+                book.getTitle(), book.getAuthor(), book.getYear(), book.getOwner(), id);
     }
 
     public void save(Book book) {
         jdbcTemplate.update("INSERT INTO book(title, author, year) VALUES(?, ?, ?)",
                 book.getTitle(), book.getAuthor(), book.getYear());
     }
-
-
 }
