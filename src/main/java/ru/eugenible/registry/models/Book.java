@@ -6,9 +6,15 @@ public class Book {
     private String title;
     private String author;
     private int year;
-    private Person person;
+    private Person owner;
 
+    public Person getOwner() {
+        return owner;
+    }
 
+    public void setOwner(Person owner) {
+        this.owner = owner;
+    }
 
     public Book(int id, String title, String author, int year) {
         this.id = id;

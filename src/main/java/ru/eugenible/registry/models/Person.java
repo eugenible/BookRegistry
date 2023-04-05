@@ -1,9 +1,11 @@
 package ru.eugenible.registry.models;
 
+import javax.validation.Valid;
 import java.util.List;
 
 public class Person {
 
+    @Valid
     private int id;
     private String name;
     private int age;

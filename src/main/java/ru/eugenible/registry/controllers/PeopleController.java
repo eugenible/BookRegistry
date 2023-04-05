@@ -14,7 +14,6 @@ import javax.validation.Valid;
 @RequestMapping("/people")
 public class PeopleController {
 
-
     private PersonDAO personDAO;
 
     @Autowired
@@ -43,6 +42,8 @@ public class PeopleController {
 
     @PostMapping
     public String save(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "people/new";
         personDAO.save(person);
         return "redirect:/people";
     }
@@ -54,7 +55,8 @@ public class PeopleController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute Person person, @PathVariable("id") int id) {
+    public String update(@PathVariable("id") int id, @ModelAttribute Person person, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) return "people/edit";
         personDAO.update(id, person);
         return "redirect:/people";
     }

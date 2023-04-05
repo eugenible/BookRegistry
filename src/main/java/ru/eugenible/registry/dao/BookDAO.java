@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.eugenible.registry.models.Book;
+import ru.eugenible.registry.models.Person;
 
 import java.util.List;
 
@@ -13,9 +14,12 @@ public class BookDAO {
 
     private JdbcTemplate jdbcTemplate;
 
+    private PersonDAO personDAO;
+
     @Autowired
-    public BookDAO(JdbcTemplate jdbcTemplate) {
+    public BookDAO(JdbcTemplate jdbcTemplate, PersonDAO personDAO) {
         this.jdbcTemplate = jdbcTemplate;
+        this.personDAO = personDAO;
     }
 
     public List<Book> list() {
@@ -30,16 +34,34 @@ public class BookDAO {
     }
 
     public Book show(int id) {
-        return jdbcTemplate.query("SELECT * FROM book WHERE ID = ?", new BeanPropertyRowMapper<>(Book.class),
+        Book book = jdbcTemplate.query("SELECT * FROM book WHERE ID = ?", (rs, row) -> {
+                    Book mappedBook = new Book();
+                    mappedBook.setId(id);
+                    mappedBook.setAuthor(rs.getString("author"));
+                    mappedBook.setTitle(rs.getString("title"));
+                    mappedBook.setYear(rs.getInt("year"));
+
+                    int ownerId = rs.getInt("person_id");
+                    Person owner = personDAO.show(ownerId);
+                    mappedBook.setPerson(owner);
+                    return mappedBook;
+                },
                 id).stream().findAny().orElse(null);
+
+        return book;
     }
 
     public void delete(int id) {
         jdbcTemplate.update("DELETE FROM book WHERE id = ?");
     }
 
-    public void update(int it, Book book) {
+    public void update(int id, Book book) {
         jdbcTemplate.update("UPDATE book SET title = ?, author = ?, year= ?, person_id = ? WHERE id = ?",
+                book.getTitle(), book.getAuthor(), book.getYear(), book.getPerson());
+    }
+
+    public void save(Book book) {
+        jdbcTemplate.update("INSERT INTO book(title, author, year) VALUES(?, ?, ?)",
                 book.getTitle(), book.getAuthor(), book.getYear());
     }
 
