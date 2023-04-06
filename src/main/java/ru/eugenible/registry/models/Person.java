@@ -1,24 +1,32 @@
 package ru.eugenible.registry.models;
 
-import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
 
-    @Valid
     private int id;
     private String name;
     private int age;
-
     private List<Book> books;
 
-    public Person(int id, String name, int age) {
+    public Person(int id, String name, int age, List<Book> books) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.books = books;
     }
 
     public Person() {
+        this.books = new ArrayList<>();
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     public int getId() {

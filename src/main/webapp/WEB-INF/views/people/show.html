@@ -8,15 +8,27 @@
 
 <p th:text="'Name: ' + ${person.getName()}">value</p>
 <p th:text="'Age: ' + ${person.getAge()}">value</p>
-<br/>
+
+<div th:if="${person.books.isEmpty()}">
+    <p><b>Этот человек еще не взял ни одной книги</b></p>
+</div>
+
+<div th:if="${!person.books.isEmpty()}">
+    <hr/>
+    <p><b>Этот человек взял следующие книги:</b></p>
+    <p th:each="book : ${person.books}"
+       th:text="${book.title + ', ' + book.author + ', ' + book.year}">Книга</p>
+</div>
+
+<hr/>
 
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
-  <input type="submit" value="Удалить читателя">
+    <input type="submit" value="Удалить читателя">
 </form>
 <br/>
 
 <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
-  <input type="submit" value="Редактировать данные читателя">
+    <input type="submit" value="Редактировать данные читателя">
 </form>
 <br/>
 <hr/>

@@ -9,6 +9,7 @@
 <p th:text="'Название: ' + ${book.getTitle()}">value</p>
 <p th:text="'Автор: ' + ${book.getAuthor()}">value</p>
 <p th:text="'Год издания: ' + ${book.getYear()}">value</p>
+<hr/>
 
 <div th:if="${book.getOwner() == null}">
     <p>Эта книга еще никем не занята</p>

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import ru.eugenible.registry.models.Book;
 import ru.eugenible.registry.models.Person;
 
 import java.util.List;
@@ -25,8 +26,18 @@ public class PersonDAO {
     }
 
     public Person show(int id) {
-        return jdbcTemplate.query("SELECT * FROM person WHERE id = ?",
+        Person person = jdbcTemplate.query("SELECT * FROM person WHERE id = ?",
                 new BeanPropertyRowMapper<>(Person.class), id).stream().findAny().orElse(null);
+        List<Book> books = jdbcTemplate.query(
+                "SELECT * FROM person p INNER JOIN book b ON (p.id = b.person_id) WHERE p.id = ?", (rs, row) -> {
+                    Book book = new Book();
+                    book.setTitle(rs.getString("title"));
+                    book.setAuthor(rs.getString("author"));
+                    book.setYear(rs.getInt("year"));
+                    return book;
+                }, id);
+        if (person != null) person.setBooks(books);
+        return person;
     }
 
     public void delete(int id) {
