@@ -9,16 +9,7 @@
 <br/>
 <hr/>
 
-<form th:method="PATCH" th:action="@{/people/{id}(id=${book.getId()})}" th:object="${book}">
-<!--    <label for="name">В</label>-->
-<!--    <input type="text" th:field="*{name}" id="name" name="name"/>-->
-<!--    <p style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</p>-->
-<!--    <br/>-->
-
-<!--    <label for="age">Введите имя</label>-->
-<!--    <input type="text" th:field="*{age}" id="age" name="age"/>-->
-<!--    <p style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{age}">Name error</p>-->
-<!--    <br/>-->
+<form th:method="PATCH" th:action="@{/books/{id}(id=${book.getId()})}" th:object="${book}">
 
     <label for="title">Название книги: </label>
     <input type="text" th:value="*{title}" id="title" name="title">
@@ -34,6 +25,13 @@
     <input type="text" th:value="*{year}" id="year" name="year">
     <p style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></p>
     <br/>
+
+    // TODO: pass object reference to owner to controller
+<!--    <label for="owner">Владелец: </label>-->
+<!--    <input type="text" th:value="*{owner}" id="owner" name="owner">-->
+<!--    <p style="color:red" th:if="${#fields.hasErrors('owner')}" th:errors="*{owner}"></p>-->
+<!--    <br/>-->
+
     <hr/>
 
     <input type="submit" value="Обновить данные"/>

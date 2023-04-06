@@ -16,14 +16,17 @@
 
 <div th:if="${book.getOwner() != null}">
     <p th:text="'Книга взята читателем по имени: ' + ${book.getOwner().getName()}">Книга занята</p>
-<!--    <a th:href="@{/books/}">Список книг</a>-->
-<!--    <form th:method="GET" th:action="@{/books/{id}/delete-owner(id=${book.getId()})}">-->
-<!--        <input type="submit" value="Освободить книгу">-->
-<!--    </form>-->
-<!--    <p th:text="ДА ДА ДА ДАД ДА">Книга занята</p>-->
+
+    <form th:method="DELETE" th:action="@{/books/{id}/delete-owner(id=${book.getId()})}">
+        <input type="submit" value="Освободить книгу">
+    </form>
 </div>
 
 <hr/>
+
+<!--<form th:method="GET" th:action="@{/books/{id}/delete-owner(id=${book.getId()})}">-->
+<!--    <input type="submit" value="Освободить книгу">-->
+<!--</form>-->
 
 <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
     <input type="submit" value="Удалить книгу">
