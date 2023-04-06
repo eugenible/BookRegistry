@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Изменение данных о книге</title>
@@ -27,10 +27,8 @@
     <br/>
 
     // TODO: pass object reference to owner to controller
-<!--    <label for="owner">Владелец: </label>-->
-<!--    <input type="text" th:value="*{owner}" id="owner" name="owner">-->
-<!--    <p style="color:red" th:if="${#fields.hasErrors('owner')}" th:errors="*{owner}"></p>-->
-<!--    <br/>-->
+    <input type="hidden" th:value="*{owner.id}" id="owner" name="owner">
+    <br/>
 
     <hr/>
 

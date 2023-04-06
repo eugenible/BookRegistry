@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Информация о книге</title>
@@ -12,6 +12,19 @@
 
 <div th:if="${book.getOwner() == null}">
     <p>Эта книга еще никем не занята</p>
+
+    <label for="person">Выберите владельца книги:</label>
+
+    <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.id})}">
+        <select th:object="${person}" th:field="*{id}" id="person">
+            <option th:each="person : ${people}"
+                    th:value="${person.id}"
+                    th:text="${person.name}"></option>
+        </select>
+
+        <input type="submit" value="Назначить человека">
+    </form>
+
 </div>
 
 <div th:if="${book.getOwner() != null}">
@@ -23,10 +36,6 @@
 </div>
 
 <hr/>
-
-<!--<form th:method="GET" th:action="@{/books/{id}/delete-owner(id=${book.getId()})}">-->
-<!--    <input type="submit" value="Освободить книгу">-->
-<!--</form>-->
 
 <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
     <input type="submit" value="Удалить книгу">

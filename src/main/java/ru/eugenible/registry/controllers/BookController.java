@@ -11,8 +11,6 @@ import ru.eugenible.registry.dao.PersonDAO;
 import ru.eugenible.registry.models.Book;
 import ru.eugenible.registry.models.Person;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/books")
 public class BookController {
@@ -35,6 +33,8 @@ public class BookController {
     @GetMapping("/{id}")
     public String show(@PathVariable int id, Model model) {
         model.addAttribute("book", bookDAO.show(id));
+        model.addAttribute("people", personDAO.list());
+        model.addAttribute("person", new Person());
         return "books/show";
     }
 
@@ -82,6 +82,13 @@ public class BookController {
         book.setOwner(null);
         bookDAO.update(id, book);
         return "redirect:/books/" + id;
+    }
+
+    @PatchMapping("/{id}/assign")
+    public String assignOwner(@ModelAttribute Person person, @PathVariable("id") int bookId) {
+        Book book = bookDAO.show(bookId);
+        book.setOwner(person);
+        return "redirect:/books/" + bookId;
     }
 
 
