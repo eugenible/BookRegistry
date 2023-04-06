@@ -43,7 +43,6 @@ public class BookController {
 
     @GetMapping("/new")
     public String create(@ModelAttribute Book book, Model model) {
-        model.addAttribute("people", personDAO.list());
         return "books/new";
     }
 
@@ -70,29 +69,24 @@ public class BookController {
     public String update(@PathVariable int id, @ModelAttribute Book book, BindingResult bindingResult) {
         System.out.println("In update");
         if (bindingResult.hasErrors()) return "books/edit";
+
         Book bookFromDB = bookDAO.show(id);  // Чтобы не записать owner=null (пришедший из запроса)
         bookFromDB.setAuthor(book.getAuthor());
         bookFromDB.setTitle(book.getTitle());
         bookFromDB.setYear(book.getYear());
         bookDAO.update(id, bookFromDB);
-        return "redirect:/books";
+        return "redirect:/books/" + id;
     }
 
     @PatchMapping("/{id}/delete-owner")
     public String deleteOwner(@PathVariable int id) {
-        Book book = bookDAO.show(id);
-        book.setOwner(null);
-        bookDAO.update(id, book);
+        bookDAO.releaseOwner(id);
         return "redirect:/books/" + id;
     }
 
     @PatchMapping("/{id}/assign")
     public String assignOwner(@ModelAttribute Person person, @PathVariable("id") int bookId) {
-        Book book = bookDAO.show(bookId);
-        book.setOwner(person);
-        bookDAO.update(bookId, book);
+        bookDAO.assignOwner(bookId, person);
         return "redirect:/books/" + bookId;
     }
-
-
 }

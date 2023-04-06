@@ -64,4 +64,12 @@ public class BookDAO {
         jdbcTemplate.update("INSERT INTO book(title, author, year) VALUES(?, ?, ?)",
                 book.getTitle(), book.getAuthor(), book.getYear());
     }
+
+    public void assignOwner(int id, Person owner) {
+        jdbcTemplate.update("UPDATE book SET person_id = ? WHERE id = ?", owner.getId(), id);
+    }
+
+    public void releaseOwner(int bookId) {
+        jdbcTemplate.update("UPDATE book SET person_id = ? where id = ?", null, bookId);
+    }
 }
