@@ -29,8 +29,8 @@ public class PeopleController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-//        Person person = personDAO.show(id);
-//        if (person == null) return "redirect:/people";
+        Person person = personDAO.show(id);
+        if (person == null) return "people/absent";
         model.addAttribute("person", personDAO.show(id));
         return "people/show";
     }

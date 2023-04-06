@@ -1,7 +1,6 @@
 package ru.eugenible.registry.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.eugenible.registry.models.Book;
@@ -56,9 +55,9 @@ public class BookDAO {
     }
 
     public void update(int id, Book book) {
-        Object personId =
+        Object personId = book.getOwner() == null ? null : book.getOwner().getId();
         jdbcTemplate.update("UPDATE book SET title = ?, author = ?, year= ?, person_id = ? WHERE id = ?",
-                book.getTitle(), book.getAuthor(), book.getYear(), book.getOwner(), id);
+                book.getTitle(), book.getAuthor(), book.getYear(), personId, id);
     }
 
     public void save(Book book) {

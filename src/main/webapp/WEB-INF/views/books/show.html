@@ -30,7 +30,7 @@
 <div th:if="${book.getOwner() != null}">
     <p th:text="'Книга взята читателем по имени: ' + ${book.getOwner().getName()}">Книга занята</p>
 
-    <form th:method="DELETE" th:action="@{/books/{id}/delete-owner(id=${book.getId()})}">
+    <form th:method="PATCH" th:action="@{/books/{id}/delete-owner(id=${book.getId()})}">
         <input type="submit" value="Освободить книгу">
     </form>
 </div>
@@ -40,6 +40,8 @@
 <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
     <input type="submit" value="Удалить книгу">
 </form>
+
+<br/>
 
 <form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getId()})}">
     <input type="submit" value="Редактировать данные книги">

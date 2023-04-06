@@ -26,8 +26,6 @@
     <p style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></p>
     <br/>
 
-    // TODO: pass object reference to owner to controller
-    <input type="hidden" th:value="*{owner.id}" id="owner" name="owner">
     <br/>
 
     <hr/>

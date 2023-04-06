@@ -32,6 +32,9 @@ public class BookController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable int id, Model model) {
+        Book book = bookDAO.show(id);
+        if (book == null) return "books/absent";
+
         model.addAttribute("book", bookDAO.show(id));
         model.addAttribute("people", personDAO.list());
         model.addAttribute("person", new Person());
@@ -51,11 +54,9 @@ public class BookController {
         return "redirect:/books";
     }
 
-    @DeleteMapping("/{id}/delete-owner")
+    @DeleteMapping("/{id}")
     public String delete(@PathVariable int id) {
-        Book book = bookDAO.show(id);
-        book.setOwner(null);
-        bookDAO.update(id, book);
+        bookDAO.delete(id);
         return "redirect:/books";
     }
 
@@ -68,16 +69,17 @@ public class BookController {
     @PatchMapping("/{id}")
     public String update(@PathVariable int id, @ModelAttribute Book book, BindingResult bindingResult) {
         System.out.println("In update");
-//        if (bindingResult.hasErrors()) return "books/edit";
-        System.out.println("1");
-        bookDAO.update(id, book);
-        System.out.println("2");
+        if (bindingResult.hasErrors()) return "books/edit";
+        Book bookFromDB = bookDAO.show(id);  // Чтобы не записать owner=null (пришедший из запроса)
+        bookFromDB.setAuthor(book.getAuthor());
+        bookFromDB.setTitle(book.getTitle());
+        bookFromDB.setYear(book.getYear());
+        bookDAO.update(id, bookFromDB);
         return "redirect:/books";
     }
 
     @PatchMapping("/{id}/delete-owner")
     public String deleteOwner(@PathVariable int id) {
-        System.out.println("Зашли v delete");
         Book book = bookDAO.show(id);
         book.setOwner(null);
         bookDAO.update(id, book);
@@ -88,6 +90,7 @@ public class BookController {
     public String assignOwner(@ModelAttribute Person person, @PathVariable("id") int bookId) {
         Book book = bookDAO.show(bookId);
         book.setOwner(person);
+        bookDAO.update(bookId, book);
         return "redirect:/books/" + bookId;
     }
 
