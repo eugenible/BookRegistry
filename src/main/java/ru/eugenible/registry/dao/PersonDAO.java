@@ -9,11 +9,12 @@ import ru.eugenible.registry.models.Book;
 import ru.eugenible.registry.models.Person;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PersonDAO {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     private PersonDAO(JdbcTemplate jdbcTemplate) {
@@ -21,13 +22,14 @@ public class PersonDAO {
     }
 
     public List<Person> list() {
-        List<Person> list = jdbcTemplate.query("SELECT * FROM person", new BeanPropertyRowMapper<>(Person.class));
-        return list;
+        return jdbcTemplate.query("SELECT * FROM person", new BeanPropertyRowMapper<>(Person.class));
     }
 
     public Person show(int id) {
         Person person = jdbcTemplate.query("SELECT * FROM person WHERE id = ?",
                 new BeanPropertyRowMapper<>(Person.class), id).stream().findAny().orElse(null);
+        if (person == null) return null;
+
         List<Book> books = jdbcTemplate.query(
                 "SELECT * FROM person p INNER JOIN book b ON (p.id = b.person_id) WHERE p.id = ?", (rs, row) -> {
                     Book book = new Book();
@@ -36,7 +38,7 @@ public class PersonDAO {
                     book.setYear(rs.getInt("year"));
                     return book;
                 }, id);
-        if (person != null) person.setBooks(books);
+        person.setBooks(books);
         return person;
     }
 
@@ -52,4 +54,8 @@ public class PersonDAO {
         jdbcTemplate.update("UPDATE person SET name = ?, age = ? WHERE id = ?", person.getName(), person.getAge(), id);
     }
 
+    public Optional<Person> findPersonByName(String name) {
+        return jdbcTemplate.query("SELECT * FROM person WHERE name = ?", new BeanPropertyRowMapper<>(Person.class),
+                name).stream().findAny();
+    }
 }

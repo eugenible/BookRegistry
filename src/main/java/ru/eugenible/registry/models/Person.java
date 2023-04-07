@@ -1,14 +1,24 @@
 package ru.eugenible.registry.models;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
 
     private int id;
+
+    @NotEmpty(message = "Имя не может быть пустым")
+    @Size(min = 2, max = 40, message = "Длина имени читателя должна быть в пределах от 2 до 40 символов")
     private String name;
+
+    @Min(value = 14, message = "Указанный возраст не может быть меньше минимального, равного 14 годам")
     private int age;
+
     private List<Book> books;
+
 
     public Person(int id, String name, int age, List<Book> books) {
         this.id = id;
