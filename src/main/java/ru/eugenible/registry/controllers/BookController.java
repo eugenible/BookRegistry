@@ -15,8 +15,8 @@ import ru.eugenible.registry.models.Person;
 @RequestMapping("/books")
 public class BookController {
 
-    private BookDAO bookDAO;
-    private PersonDAO personDAO;
+    private final BookDAO bookDAO;
+    private final PersonDAO personDAO;
 
     @Autowired
     public BookController(BookDAO bookDAO, PersonDAO personDAO) {
@@ -34,7 +34,6 @@ public class BookController {
     public String show(@PathVariable int id, Model model) {
         Book book = bookDAO.show(id);
         if (book == null) return "books/absent";
-
         model.addAttribute("book", bookDAO.show(id));
         model.addAttribute("people", personDAO.list());
         model.addAttribute("person", new Person());
@@ -42,7 +41,7 @@ public class BookController {
     }
 
     @GetMapping("/new")
-    public String create(@ModelAttribute Book book, Model model) {
+    public String create(@ModelAttribute Book book) {
         return "books/new";
     }
 
@@ -66,14 +65,11 @@ public class BookController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@PathVariable int id, @ModelAttribute Book book, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) return "books/edit";
-
-        Book bookFromDB = bookDAO.show(id);  // Чтобы не записать owner=null (пришедший из запроса)
-        bookFromDB.setAuthor(book.getAuthor());
-        bookFromDB.setTitle(book.getTitle());
-        bookFromDB.setYear(book.getYear());
-        bookDAO.update(id, bookFromDB);
+    public String update(@PathVariable int id, @ModelAttribute Book book, BindingResult bookBindingRes,
+                         @ModelAttribute Person person) {
+        if (bookBindingRes.hasErrors()) return "books/edit";
+        book.setOwner(person);
+        bookDAO.update(id, book);
         return "redirect:/books/" + id;
     }
 

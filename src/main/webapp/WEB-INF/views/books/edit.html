@@ -25,6 +25,8 @@
     <input type="text" th:value="*{year}" id="year" name="year">
     <p style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></p>
     <br/>
+    <!-- Сделать с String -> Person Converter-ом !-->
+    <input type="hidden" th:value="*{owner.id}" name="id">
 
     <br/>
 

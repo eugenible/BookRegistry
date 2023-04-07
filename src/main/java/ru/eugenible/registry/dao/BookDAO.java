@@ -1,6 +1,7 @@
 package ru.eugenible.registry.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.eugenible.registry.models.Book;
@@ -11,14 +12,11 @@ import java.util.List;
 @Component
 public class BookDAO {
 
-    private JdbcTemplate jdbcTemplate;
-
-    private PersonDAO personDAO;
+    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public BookDAO(JdbcTemplate jdbcTemplate, PersonDAO personDAO) {
+    public BookDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.personDAO = personDAO;
     }
 
     public List<Book> list() {
@@ -33,19 +31,15 @@ public class BookDAO {
     }
 
     public Book show(int id) {
-        Book book = jdbcTemplate.query("SELECT * FROM book WHERE ID = ?", (rs, row) -> {
-                    Book mappedBook = new Book();
-                    mappedBook.setId(id);
-                    mappedBook.setAuthor(rs.getString("author"));
-                    mappedBook.setTitle(rs.getString("title"));
-                    mappedBook.setYear(rs.getInt("year"));
-
-                    int ownerId = rs.getInt("person_id");
-                    Person owner = personDAO.show(ownerId);
-                    mappedBook.setOwner(owner);
-                    return mappedBook;
-                },
+        Book book = jdbcTemplate.query("SELECT * FROM book WHERE ID = ?", new BeanPropertyRowMapper<>(Book.class),
                 id).stream().findAny().orElse(null);
+        if (book == null) return null;
+
+        // В человека не вставляем список книг, т.к. в данном контексте нам важны его личные характеристики
+        Person owner = jdbcTemplate.query(
+                "SELECT p.id, p.age, p.name FROM person p INNER JOIN book b ON b.person_id = p.id WHERE b.id = ?",
+                new BeanPropertyRowMapper<>(Person.class), id).stream().findAny().orElse(null);
+        book.setOwner(owner);
 
         return book;
     }
