@@ -67,7 +67,6 @@ public class BookController {
 
     @PatchMapping("/{id}")
     public String update(@PathVariable int id, @ModelAttribute Book book, BindingResult bindingResult) {
-        System.out.println("In update");
         if (bindingResult.hasErrors()) return "books/edit";
 
         Book bookFromDB = bookDAO.show(id);  // Чтобы не записать owner=null (пришедший из запроса)
