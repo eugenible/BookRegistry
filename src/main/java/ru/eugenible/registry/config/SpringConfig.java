@@ -55,9 +55,11 @@ public class SpringConfig implements WebMvcConfigurer {
         return templateEngine;
     }
 
+
+    // Маппинг URL и view
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("/WEB-INF/views/welcome.html");
+        registry.addViewController("/").setViewName("welcome/welcome.html");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 
