@@ -1,4 +1,9 @@
-## Book Registry System
+# Book Registry System
+
+<p align="center">
+    <img width=600 src="materials/images/Heading.PNG">
+</p>
+
 
 ### Используемый стэк технологий:
 
@@ -18,48 +23,53 @@
 * Для создания или редактирования информации о читателе или книге должны выполняться предъвляемые требования (Уникальное
   имя читателя, верный возраст, допустимое название книги, год издания и т.д.);
 
-![](materials/images/welcome.PNG)
-
 <p align="center">
     <img src="materials/images/welcome.PNG">
 p>
 
 Рисунок 1 - Приветственная страница
-
-![](materials/images/emptyPeople.PNG)
-
+<p align="center">
+<img src="materials/images/emptyPeople.PNG">
+</p>
 Рисунок 2 - Пустой список читателей
-
-![](materials/images/createPerson.PNG)
-
+<p align="center">
+<img src="materials/images/createPerson.PNG">
+</p>
 Рисунок 3 - Форма создания читателя 
 
-![](materials/images/peopleList.PNG)
-
+<p align="center">
+<img src="materials/images/peopleList.PNG">
+</p>
 Рисунок 4 - Список читателей после добавления в реестр
 
-![](materials/images/booksList.PNG)
-
+<p align="center">
+<img src="materials/images/booksList.PNG">
+</p>
 Рисунок 5 - Список книг после добавления в реестр
 
-![](materials/images/bookChoose.PNG)
-
+<p align="center">
+<img src="materials/images/bookChoose.PNG">
+</p>
 Рисунок 6 - Страница книги, когда она никем не взята (с возможностью выбора читателя из списка зарегистрированных)
 
-![](materials/images/bookTaken.PNG)
-
+<p align="center">
+<img src="materials/images/bookTaken.PNG">
+</p>
 Рисунок 7 - Страница книги, взятой читателем
 
-![](materials/images/personNoBook.PNG)
+<p align="center">
+<img src="materials/images/personNoBook.PNG">
+</p>
+Рисунок 8 - Страница читателя до взятия книги
 
-Рисунок 8 - Страница читателя до взятия книги 
-
-![](materials/images/afterBookTaken.PNG)
-
+<p align="center">
+<img src="materials/images/afterBookTaken.PNG">
+</p>
 Рисунок 9 - Страница человека, когда ему была присвоена книга
 
-![](materials/images/incorrectBookEdit.PNG)
-
+<p align="center">
+<img src="materials/images/incorrectBookEdit.PNG">
+</p>
 Рисунок 10 - Предупреждение на странице редактирования информации о книге после ввода неверных данных  
 
 ### Условия для запуска:
@@ -76,4 +86,3 @@ p>
 2) Во вкладке `Deployment` добавить war-exploded архив, а также указать пустой графу Application Context. После этого
    можно запускать сервер через Intellij IDEA;
 3) По адресу ```http://www.localhost:8080/``` будет находиться приветственная страница проиложения
-
