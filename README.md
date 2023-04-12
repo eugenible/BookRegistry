@@ -18,45 +18,49 @@
 * Для создания или редактирования информации о читателе или книге должны выполняться предъвляемые требования (Уникальное
   имя читателя, верный возраст, допустимое название книги, год издания и т.д.);
 
-![](materials/welcome.PNG)
+![](materials/images/welcome.PNG)
 
 Рисунок 1 - Приветственная страница
 
-![](materials/emptyPeople.PNG)
+![](materials/images/emptyPeople.PNG)
 
 Рисунок 2 - Пустой список читателей
 
-![](materials/createPerson.PNG)
+![](materials/images/createPerson.PNG)
 
-Рисунок 3 - Форма создания читателя
+Рисунок 3 - Форма создания читателя 
 
-![](materials/peopleList.PNG)
+![](materials/images/peopleList.PNG)
 
 Рисунок 4 - Список читателей после добавления в реестр
 
-![](materials/booksList.PNG)
+![](materials/images/booksList.PNG)
 
 Рисунок 5 - Список книг после добавления в реестр
 
-![](materials/bookChoose.PNG)
+![](materials/images/bookChoose.PNG)
 
 Рисунок 6 - Страница книги, когда она никем не взята (с возможностью выбора читателя из списка зарегистрированных)
 
-![](materials/bookTaken.PNG)
+![](materials/images/bookTaken.PNG)
 
-Рисунок 6 - Страница книги, взятой читателем
+Рисунок 7 - Страница книги, взятой читателем
 
-![](materials/afterBookTaken.PNG)
+![](materials/images/personNoBook.PNG)
 
-Рисунок 7 - Страница человека, когда ему была присвоена книга на странице книги
+Рисунок 8 - Страница читателя до взятия книги 
 
-![](materials/incorrectBookEdit.PNG)
+![](materials/images/afterBookTaken.PNG)
 
-Рисунок 8 - Предупреждение на странице редактирования инфомрации о книге после ввода неверных данные  
+Рисунок 9 - Страница человека, когда ему была присвоена книга
+
+![](materials/images/incorrectBookEdit.PNG)
+
+Рисунок 10 - Предупреждение на странице редактирования информации о книге после ввода неверных данных  
 
 ### Условия для запуска:
 
-* Для запуска требуется веб-сервер Tomcat версии 9.0.73 или ниже;
+* Для запуска требуется веб-сервер Tomcat версии 9.0.73 или более ранняя версия;
 * Настройки для соединения с БД находятся в файле ```src/main/resources/database.properties```;
 * Для создания таблиц можно воспользоваться SQL-скриптами из ```materials/fillDatabase.sql```;
 

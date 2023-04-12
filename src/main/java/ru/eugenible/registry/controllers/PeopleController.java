@@ -46,8 +46,10 @@ public class PeopleController {
     @PostMapping
     public String save(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
         validator.validate(person, bindingResult);
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()) {
             return "people/new";
+        }
+
         personDAO.save(person);
         return "redirect:/people";
     }
@@ -58,7 +60,6 @@ public class PeopleController {
         return "people/edit";
     }
 
-    // TODO: 1) Fix name collisions when updating person's age
     @PatchMapping("/{id}")
     public String update(@PathVariable("id") int id, @ModelAttribute Person person, BindingResult bindingResult) {
         validator.validate(person, bindingResult);
