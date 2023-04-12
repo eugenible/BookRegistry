@@ -18,11 +18,15 @@
 * Для создания или редактирования информации о читателе или книге должны выполняться предъвляемые требования (Уникальное
   имя читателя, верный возраст, допустимое название книги, год издания и т.д.);
 
-![](materials/images/welcome.PNG#center)
+![](materials/images/welcome.PNG)
+
+<p align="center">
+    <img src="materials/images/welcome.PNG">
+p>
 
 Рисунок 1 - Приветственная страница
 
-![](materials/images/emptyPeople.PNG#center)
+![](materials/images/emptyPeople.PNG)
 
 Рисунок 2 - Пустой список читателей
 
