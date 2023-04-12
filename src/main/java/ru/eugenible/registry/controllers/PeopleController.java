@@ -58,6 +58,7 @@ public class PeopleController {
         return "people/edit";
     }
 
+    // TODO: 1) Fix name collisions when updating person's age
     @PatchMapping("/{id}")
     public String update(@PathVariable("id") int id, @ModelAttribute Person person, BindingResult bindingResult) {
         validator.validate(person, bindingResult);

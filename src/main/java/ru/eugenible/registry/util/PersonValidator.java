@@ -7,6 +7,8 @@ import org.springframework.validation.Validator;
 import ru.eugenible.registry.dao.PersonDAO;
 import ru.eugenible.registry.models.Person;
 
+import java.util.Optional;
+
 @Component
 public class PersonValidator implements Validator {
 
@@ -25,8 +27,8 @@ public class PersonValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
-
-        if (personDAO.findPersonByName(person.getName()).isPresent()) {
+        Optional<Person> personFromDB = personDAO.findPersonByName(person.getName());
+        if (personFromDB.isPresent() && personFromDB.get().getId() != person.getId()) {
             errors.rejectValue("name", "", "Имя неуникально");
         }
     }
