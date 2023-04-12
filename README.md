@@ -1,7 +1,7 @@
 # Book Registry System
 
 <p align="center">
-    <img width=600 src="materials/images/Heading.PNG">
+    <img width=600 src="materials/images/Heading.png">
 </p>
 
 
